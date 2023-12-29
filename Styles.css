@@ -1,0 +1,55 @@
+*{
+    font-family: 'Courier New', Courier, monospace;
+}
+h1{
+    font-size: 40px;
+    color: rgb(79, 8, 105);
+}
+p, a {
+    color: white;
+    border: 1px solid aliceblue;
+    text-align: center;
+    font-size: 30px;
+    padding: 10px;
+    border-radius: 35px;
+    background: rgb(79, 8, 105);
+
+}
+td{
+    color: white;
+    border: 1px solid aliceblue;
+    text-align: center;
+    font-size: 30px;
+    border-radius: 35px;
+    background: rgb(79, 8, 105);
+
+}
+body{
+    background-color: aliceblue;
+}
+div{
+    height: 600px;
+    margin: auto;
+    width: 70%;
+    padding: 5px;
+}
+table{
+    height: 400px;
+    margin: auto;
+    width: 100%;
+    padding: 2px;
+}
+.info{
+    font-size: 20px;
+    color: rgb(79, 8, 105);
+    border: none;
+    background-color: aliceblue;
+}
+button{
+    border-radius: 10px;
+    background-color: rgb(79, 8, 105);
+    font-size: 30px;
+    text-decoration: underline;
+    border: none;
+    color: white;
+}

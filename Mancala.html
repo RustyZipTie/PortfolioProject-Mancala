@@ -4,46 +4,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mancala</title>
-    <style>
-      tr,  td, th {
-  border: 1px solid #2e3328;
-  text-align: left;
-  padding: 8px;
-}
-    </style>
+    <link rel="stylesheet" href="Styles.css">
 </head>
 <body>
     <h1>Mancala</h1>
-    <p>You can find rules <a href="https://www.thesprucecrafts.com/how-to-play-mancala-409424#toc-the-basic-rules-of-mancala" target="_blank">here</a></p>
-    <p id="opp">1</p>
-    <table>
-        
-        <tr>
-            <td>1</td>
-            <td>1</td>
-        </tr>
-        <tr>
-            <td>1</td>
-            <td>1</td>
-        </tr>
-        <tr>
-            <td>1</td>
-            <td>1</td>
-        </tr>
-        <tr>
-            <td><button>1</button></td>
-            <td><button>1</button></td>
-        </tr>
-        <tr>
-            <td><button>1</button></td>
-            <td><button>1</button></td>
-        </tr>
-        <tr>
-            <td><button>1</button></td>
-            <td><button>1</button></td>
-        </tr>
-    </table>
-    <p id="you">1</p>
+    <p class="info">You can find rules <a href="https://www.thesprucecrafts.com/how-to-play-mancala-409424#toc-the-basic-rules-of-mancala" target="_blank" class="info">here</a></p>
+    <div class="board">
+        <p id="d6" >6</p>
+        <table >
+
+            <tr >
+                <td id="d5">5</td>
+                <td id="d7">7</td>
+            </tr>
+            <tr >
+                <td id="d4">4</td>
+                <td id="d8">8</td>
+            </tr>
+            <tr >
+                <td id="d3">3</td>
+                <td id="d9">9</td>
+            </tr>
+            <tr >
+                <td><button id="d2" onclick="youPlay(2)">2</button></td>
+                <td><button id="d10" onclick="youPlay(10)">10</button></td>
+            </tr>
+            <tr >
+                <td><button id="d1" onclick="youPlay(1)">1</button></td>
+                <td><button id="d11" onclick="youPlay(11)">11</button></td>
+            </tr>
+            <tr >
+                <td><button id="d0" onclick="youPlay(0)">0</button></td>
+                <td><button id="d12" onclick="youPlay(12)">12</button></td>
+            </tr>
+        </table>
+        <p id="d13" >13</p>
+        <button onclick="reset()">Restart</button>
+        <button id="turn" onclick="oppPlay()">Your turn!</button>
+    </div>
     <script src="MancalaJS.js"></script>
 </body>
 </html>
