@@ -10,9 +10,9 @@ function refreshUI(){
 function youPlay(place){
     if(yourTurn){
         refreshUI();
-        yourTurn = false;
+        //yourTurn = false;
         if(play(place)){
-            yourTurn = true;
+            //yourTurn = true;
             alert('You get to play again!');
         }
         refreshUI();
@@ -29,9 +29,9 @@ function oppPlay(){
     }while(place === 6 || board[place]<1);
     if(!yourTurn){
         refreshUI();
-        yourTurn = true;
+        //yourTurn = true;
         if(play(place)){
-            yourTurn = false;
+            //yourTurn = false;
             alert('Opponent gets to play again.');
         }
         refreshUI();
@@ -42,6 +42,7 @@ function oppPlay(){
     }
 }
 function play(startPlace, playBoard = board){
+    
     let playAgain = false;
     if(playBoard[startPlace]>0){
         //take stones from place and put in hand
@@ -59,8 +60,10 @@ function play(startPlace, playBoard = board){
 
             while(hand.stones>0){
                 hand.move();
-                hand.stones--;
+                if((yourTurn && hand.place!==6)||(!yourTurn && hand.place!==13)){
+                    hand.stones--;
                 playBoard[hand.place]++;
+                }
             }
             
             if((yourTurn&&hand.place===13)||(!yourTurn&&hand.place===6)){
@@ -89,6 +92,10 @@ function play(startPlace, playBoard = board){
     }else{
         playAgain=true;
         alert('You clicked on a place with no stones. \nPlease choose a different place.');
+    }
+    
+    if(!playAgain){
+        yourTurn = !yourTurn;
     }
     return playAgain;
 }
