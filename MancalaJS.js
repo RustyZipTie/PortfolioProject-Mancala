@@ -1,6 +1,6 @@
 const board = [4, 4, 4, 4, 4, 4, 0, 4, 4, 4, 4, 4, 4, 0];//starts in the lower left, then goes clockwise, ending with your mancala.
-
 let yourTurn = true;
+refreshUI();
 function refreshUI(){
     for(let i=0; i<board.length; i++){
         document.getElementById('d'+i).innerHTML = board[i];
@@ -10,33 +10,22 @@ function refreshUI(){
 function youPlay(place){
     if(yourTurn){
         refreshUI();
-        //yourTurn = false;
         if(play(place)){
-            //yourTurn = true;
             alert('You get to play again!');
         }
         refreshUI();
-        
-        
     }else{
         alert('It\'s not your turn. \nClick "Play- opponent" below to let the opponent make it\'s move.')
     }
 }
 function oppPlay(){
-    let place = 0;
-    do{
-        place = (Math.floor(Math.random()*7))+3;
-    }while(place === 6 || board[place]<1);
+    let place = decideOppMove();
     if(!yourTurn){
         refreshUI();
-        //yourTurn = true;
         if(play(place)){
-            //yourTurn = false;
             alert('Opponent gets to play again.');
         }
         refreshUI();
-        
-        
     }else{
         alert('It\'s your turn. \nClick one of the underlined numbers on the lower half of the board to make your move.');
     }
@@ -97,7 +86,6 @@ function play(startPlace, playBoard = board){
     if(!playAgain){
         yourTurn = !yourTurn;
     }
-    return playAgain;
 }
 
 function checkDone(){
@@ -134,5 +122,28 @@ function reset(){
     refreshUI();
 }
 
-
-refreshUI();
+//smart opponent
+class Attempt{
+    constructor(place, benefit){
+        this.place = place;
+        this.benefit = benefit;
+    }
+}
+function decideOppMove(){
+    const attempts = []
+    for(let i = 3; i<=9; i++){
+        if(i !== 6 && board[i] !== 0){
+            const vBoard = [...board];
+            const oldScore = board[6];
+            let benefit = 0;
+            if(play(i,vBoard)){
+                benefit += 4;
+            }
+            benefit += (vBoard[6]-oldScore);
+            attempts.push(new Attempt(i, benefit));
+        }
+    }
+    const sortedAttempts = attempts.sort((a,b)=>b.benefit-a.benefit);
+    console.log(sortedAttempts);
+    return sortedAttempts[0].place;
+}
