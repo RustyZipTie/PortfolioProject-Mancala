@@ -1,9 +1,33 @@
 const board = [4, 4, 4, 4, 4, 4, 0, 4, 4, 4, 4, 4, 4, 0];//starts in the lower left, then goes clockwise, ending with your mancala.
 let yourTurn = true;
+let hard = false;
 refreshUI();
 function refreshUI(){
     for(let i=0; i<board.length; i++){
         document.getElementById('d'+i).innerHTML = board[i];
+    }
+    const hardBsty = document.getElementById('hard').style;
+    const easyBsty = document.getElementById('easy').style;
+    if(hard){
+        hardBsty.color = 'rgb(79, 8, 105)'
+        hardBsty.backgroundColor = 'aliceblue';
+        hardBsty.border = '1px solid rgb(79, 8, 105)';
+        hardBsty.textDecoration =  'none';
+
+        easyBsty.color = 'aliceblue';
+        easyBsty.backgroundColor = 'rgb(79, 8, 105)';
+        easyBsty.border = 'none';
+        easyBsty.textDecoration = 'underline';
+    }else{
+        hardBsty.color = 'aliceblue';
+        hardBsty.backgroundColor = 'rgb(79, 8, 105)';
+        hardBsty.border = 'none';
+        hardBsty.textDecoration = 'underline';
+
+        easyBsty.color = 'rgb(79, 8, 105)'
+        easyBsty.backgroundColor = 'aliceblue';
+        easyBsty.border = '1px solid rgb(79, 8, 105)';
+        easyBsty.textDecoration =  'none';
     }
     document.getElementById('turn').innerHTML = yourTurn ? 'Your turn!' : 'Play- opponent';
 }
@@ -19,18 +43,23 @@ function youPlay(place){
     }
 }
 function oppPlay(){
+    console.log('In oppPlay()');
     let place = decideOppMove();
     if(!yourTurn){
+        console.log("!yourturn");
+        
         refreshUI();
         if(play(place)){
+            console.log('played. playagain is true');
             alert('Opponent gets to play again.');
-        }
+        }else{console.log('played. playagain is false');}
         refreshUI();
     }else{
         alert('It\'s your turn. \nClick one of the underlined numbers on the lower half of the board to make your move.');
+        console.log('yourturn');
     }
 }
-function play(startPlace, playBoard = board){
+function play(startPlace, playBoard = board, real = true){
     
     let playAgain = false;
     if(playBoard[startPlace]>0){
@@ -83,9 +112,10 @@ function play(startPlace, playBoard = board){
         alert('You clicked on a place with no stones. \nPlease choose a different place.');
     }
     
-    if(!playAgain){
+    if(!playAgain && real){
         yourTurn = !yourTurn;
     }
+    return playAgain;
 }
 
 function checkDone(){
@@ -130,20 +160,29 @@ class Attempt{
     }
 }
 function decideOppMove(){
-    const attempts = []
-    for(let i = 3; i<=9; i++){
-        if(i !== 6 && board[i] !== 0){
-            const vBoard = [...board];
-            const oldScore = board[6];
-            let benefit = 0;
-            if(play(i,vBoard)){
-                benefit += 4;
+    let place = -1;
+    if(hard){
+        const attempts = []
+        for(let i = 3; i<=9; i++){
+            if(i !== 6 && board[i] !== 0){
+                const vBoard = [...board];
+                const oldScore = board[6];
+                let benefit = 0;
+                if(play(i,vBoard, false)){
+                    benefit += 4;
+                }
+                benefit += (vBoard[6]-oldScore);
+                attempts.push(new Attempt(i, benefit));
             }
-            benefit += (vBoard[6]-oldScore);
-            attempts.push(new Attempt(i, benefit));
         }
+        const sortedAttempts = attempts.sort((a,b)=>b.benefit-a.benefit);
+        console.log(sortedAttempts);
+        place = sortedAttempts[0].place;
+    }else{
+        do{
+            place = (Math.floor(Math.random()*7))+3;
+        }while(place === 6 || board[place]<1);
     }
-    const sortedAttempts = attempts.sort((a,b)=>b.benefit-a.benefit);
-    console.log(sortedAttempts);
-    return sortedAttempts[0].place;
+    
+    return place;
 }
