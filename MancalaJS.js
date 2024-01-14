@@ -1,13 +1,39 @@
-const board = [4, 4, 4, 4, 4, 4, 0, 4, 4, 4, 4, 4, 4, 0];//starts in the lower left, then goes clockwise, ending with your mancala.
+const board = [4, 4, 4, 4, 4, 4, 0, 4, 4, 4, 4, 4, 4, 0];//starts in the lower right, then goes clockwise, ending with your mancala.
 let yourTurn = true;
 let hard = false;
+let disableID = 0;
+const disabler = e=>{
+    e.stopPropagation();
+    e.preventDefault();
+}
 refreshUI();
+for(const elem of document.querySelectorAll('button')){
+    console.log(elem);
+    elem.addEventListener('mouseover', ()=>{
+        elem.classList.add('active');
+    })
+    elem.addEventListener('mouseout', ()=>{
+        elem.classList.remove('active')
+    })
+}
+
+function disableEvents(){
+    disableID = document.addEventListener('click', disabler, true);
+}
+
+
 function refreshUI(){
     for(let i=0; i<board.length; i++){
-        document.getElementById('d'+i).innerHTML = board[i];
+        const elem = document.getElementById('d'+i)
+        elem.innerHTML = board[i];
+        if(i===0||i===1||i===2||i===10||i===11||i===12){
+            elem.style.fontWeight = yourTurn ? 'bold' : 'normal';
+        }
     }
+    document.querySelector('#turn').style.fontWeight = yourTurn ? 'normal' : 'bold';
     const hardBsty = document.getElementById('hard').style;
     const easyBsty = document.getElementById('easy').style;
+    
     if(hard){
         hardBsty.color = 'rgb(79, 8, 105)'
         hardBsty.backgroundColor = 'aliceblue';

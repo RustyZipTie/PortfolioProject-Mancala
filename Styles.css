@@ -1,55 +1,93 @@
 *{
     font-family: 'Courier New', Courier, monospace;
 }
+
+body{
+    background-color: aliceblue;
+}
+
 h1{
     font-size: 40px;
     color: rgb(79, 8, 105);
 }
-p, a {
-    color: white;
-    border: 1px solid aliceblue;
-    text-align: center;
-    font-size: 30px;
-    padding: 10px;
-    border-radius: 35px;
-    background: rgb(79, 8, 105);
 
-}
-td{
-    color: white;
-    border: 1px solid aliceblue;
-    text-align: center;
-    font-size: 30px;
-    border-radius: 35px;
-    background: rgb(79, 8, 105);
-
-}
-body{
-    background-color: aliceblue;
-}
-div{
-    height: 600px;
-    margin: auto;
-    width: 70%;
-    padding: 5px;
-}
-table{
-    height: 400px;
-    margin: auto;
-    width: 100%;
-    padding: 2px;
-}
 .info{
+    padding: 10px;
+    text-align: center;
     font-size: 20px;
     color: rgb(79, 8, 105);
-    border: none;
+    border: 1px solid aliceblue;
     background-color: aliceblue;
 }
+
+#block{
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    height: 100%;
+    width: 100%;
+    z-index: 999;
+}
+
 button{
+    size: inherit;
+    border: none;
+    outline: none;
     border-radius: 10px;
+    border: 1px solid rgb(79, 8, 105);
     background-color: rgb(79, 8, 105);
     font-size: 30px;
     text-decoration: underline;
-    border: none;
     color: white;
+}
+
+.active{
+    color: rgb(79, 8, 105) !important;
+    background-color: aliceblue !important;
+    border: 1px solid rgb(79, 8, 105) !important;
+}
+
+#turn{
+    margin-block: 10px;
+    outline-style: solid;
+    outline-offset: 3px;
+    outline-width: 3px;
+    outline-color: rgb(79, 8, 105);
+}
+
+#table{
+    width: 60%;
+    align-content: center;
+    margin: auto;
+}
+
+#board{
+    margin: auto;
+    display: grid;
+    grid-template-columns:  [start] 1fr [middle] 1fr [end];
+    grid-column-start: 1;
+    grid-column-end: 2;
+    gap: 30px;
+}
+.r{
+    grid-column-start: middle;
+    grid-column-end: end;
+}
+.l{
+    grid-column-start: start;
+    grid-column-end: middle;
+}
+.mancala{
+    grid-column-start: start;
+    grid-column-end: end;
+}
+
+.pit{
+    padding: 10px;
+    font-size: 30px;
+    text-align: center;
+    color: aliceblue;
+    border-radius: 35px;
+    height: fit-content;
+    background-color: rgb(79, 8, 105);
 }

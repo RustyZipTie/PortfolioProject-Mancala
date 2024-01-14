@@ -10,41 +10,31 @@
     <h1>Mancala</h1>
     <p class="info">You can find general rules <a href="https://endlessgames.com/wp-content/uploads/Mancala_Instructions.pdf" target="_blank" class="info">here</a></p>
     <p class="info">Click <button onclick="open('Guide.html', '_blank', 'popup');" class = "info" style="text-decoration: underline;">here</button> for how to use this game</p>
-    <div class="board">
+    <div id="table">
         <button id="easy" onclick="hard = false; refreshUI();">Easy</button>
-        <button id="hard" onclick="hard = true; refreshUI();">Hard</button>
-        <p id="d6" >6</p>
-        <table >
-
-            <tr >
-                <td id="d7">7</td>
-                <td id="d5">5</td>
-            </tr>
-            <tr >
-                <td id="d8">8</td>
-                <td id="d4">4</td>
-            </tr>
-            <tr >
-                <td id="d9">9</td>
-                <td id="d3">3</td>
-            </tr>
-            <tr >
-                <td><button id="d10" onclick="youPlay(10)">10</button></td>
-                <td><button id="d2" onclick="youPlay(2)">2</button></td>
-            </tr>
-            <tr >
-                <td><button id="d11" onclick="youPlay(11)">11</button></td>
-                <td><button id="d1" onclick="youPlay(1)">1</button></td>
-            </tr>
-            <tr >
-                <td><button id="d12" onclick="youPlay(12)">12</button></td>
-                <td><button id="d0" onclick="youPlay(0)">0</button></td>
-            </tr>
-        </table>
-        <p id="d13" >13</p>
-        <button onclick="reset()">Restart</button>
+        <button id="hard" onclick="hard = true; refreshUI();">Hard</button><br>
         <button id="turn" onclick="oppPlay()">Your turn!</button>
+        
+        <div id="board">
+            <p id="d6" class="pit mancala">6</p>
+            <div id="d7" class="pit l">7</div>
+            <div id="d5" class="pit r">5</div>
+            <div id="d8" class="pit l">8</div>
+            <div id="d4" class="pit r">4</div>
+            <div id="d9" class="pit l">9</div>
+            <div id="d3" class="pit r">3</div>
+            <button class="pit l" id="d10" onclick="youPlay(10)">10</button>
+            <button class="pit r" id="d2" onclick="youPlay(2)">2</button>
+            <button class="pit l" id="d11" onclick="youPlay(11)">11</button>
+            <button class="pit r" id="d1" onclick="youPlay(1)">1</button>
+            <button class="pit l" id="d12" onclick="youPlay(12)">12</button>
+            <button class="pit r" id="d0" onclick="youPlay(0)">0</button>
+            <p id="d13" class="pit mancala">13</p>
+        </div>
+        
+        <button onclick="reset()">Restart</button>
     </div>
+
     <script src="MancalaJS.js"></script>
 </body>
 </html>
