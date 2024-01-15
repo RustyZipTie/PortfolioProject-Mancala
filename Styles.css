@@ -39,7 +39,7 @@ button{
     font-size: 30px;
     text-decoration: underline;
     color: white;
-}
+} 
 
 .active{
     color: rgb(79, 8, 105) !important;

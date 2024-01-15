@@ -1,7 +1,7 @@
 const board = [4, 4, 4, 4, 4, 4, 0, 4, 4, 4, 4, 4, 4, 0];//starts in the lower right, then goes clockwise, ending with your mancala.
 let yourTurn = true;
 let hard = false;
-let disableID = 0;
+let disableID = 0; 
 const disabler = e=>{
     e.stopPropagation();
     e.preventDefault();
