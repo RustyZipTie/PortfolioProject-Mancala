@@ -57,6 +57,9 @@ function refreshUI(){
     }
     document.getElementById('turn').innerHTML = yourTurn ? 'Your turn!' : 'Play- opponent';
 }
+function slowShow(moves){
+    
+}
 function youPlay(place){
     if(yourTurn){
         refreshUI();
