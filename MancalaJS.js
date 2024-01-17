@@ -66,13 +66,18 @@ async function slowShow(moves){
     let i = 0;
     console.log('starting');
     disableEvents();
+    const hand = document.createElement('div');
+    hand.classList.add('pit');
+    hand.classList.add('active');
+    document.querySelector('#board').appendChild(hand);
     let lastEl;
     const id = await setInterval(()=>{
         if(lastEl){
             //console.log(`#d${moves[i].place - 1}`)
             lastEl.classList.remove('active');
         }
-        console.log('on:', i);
+        handStyle(moves[i].place);
+        hand.textContent = moves[i].hand;
         const el = document.querySelector(`#d${moves[i].place}`);
         el.classList.add('active');
         el.textContent = moves[i].stones;
@@ -83,11 +88,88 @@ async function slowShow(moves){
             enableEvents();
             refreshUI();
             checkDone();
+            document.querySelector('#board').removeChild(hand);
             lastEl.classList.remove('active');
             console.log('done');
         }
     }, 500);
+
+
+    function handStyle(loc){
+        switch(loc){
+            case 0:
+                hand.style.gridColumn = '4/5';
+                hand.style.gridRow = '7/8';
+                break;
+
+            case 1:
+                hand.style.gridColumn = '4/5';
+                hand.style.gridRow = '6/7';
+                break;
+
+            case 2:
+                hand.style.gridColumn = '4/5';
+                hand.style.gridRow = '5/6';
+                break;
+
+            case 3:
+                hand.style.gridColumn = '4/5';
+                hand.style.gridRow = '4/5';
+                break;
+                
+            case 4:
+                hand.style.gridColumn = '4/5';
+                hand.style.gridRow = '3/4';
+                break;
+
+            case 5:
+                hand.style.gridColumn = '4/5';
+                hand.style.gridRow = '2/3';
+                break;
+
+            case 6:
+                hand.style.gridColumn = '4/5';
+                hand.style.gridRow = '1/2';
+                break;
+
+            case 7:
+                hand.style.gridColumn = '1/2';
+                hand.style.gridRow = '2/3';
+                break;
+
+            case 8:
+                hand.style.gridColumn = '1/2';
+                hand.style.gridRow = '3/4';
+                break;
+
+            case 9:
+                hand.style.gridColumn = '1/2';
+                hand.style.gridRow = '4/5';
+                break;
+
+            case 10:
+                hand.style.gridColumn = '1/2';
+                hand.style.gridRow = '5/6';
+                break;
+
+            case 11:
+                hand.style.gridColumn = '1/2';
+                hand.style.gridRow = '6/7';
+                break;
+
+            case 12:
+                hand.style.gridColumn = '1/2';
+                hand.style.gridRow = '7/8';
+                break;
+
+            case 13:
+                hand.style.gridColumn = '1/2';
+                hand.style.gridRow = '8/9';
+                break;                                                                    
+        }
+    }
 }
+
 async function youPlay(place){
     if(yourTurn){
         //refreshUI();
@@ -132,13 +214,13 @@ async function play(startPlace, playBoard = board, real = true){
             
         while(true){
             
-            moves.push({place:hand.place, stones:playBoard[hand.place]});
+            moves.push({place:hand.place, stones:playBoard[hand.place], hand:hand.stones});
             while(hand.stones>0){
                 hand.move({place:hand.place, stones:playBoard[hand.place]});
                 if((yourTurn && hand.place!==6)||(!yourTurn && hand.place!==13)){
                     hand.stones--;
                     playBoard[hand.place]++;
-                    moves.push({place:hand.place, stones:playBoard[hand.place]})
+                    moves.push({place:hand.place, stones:playBoard[hand.place], hand:hand.stones})
                 }
             }
             
@@ -162,9 +244,7 @@ async function play(startPlace, playBoard = board, real = true){
             }
 
         }
-        //check for a winner and refresh numbers
-        //checkDone();
-        //refreshUI();
+    
     }else{
         playAgain=true;
         alert('You clicked on a place with no stones. \nPlease choose a different place.');
