@@ -254,8 +254,10 @@ async function play(startPlace, playBoard = board, real = true){
         yourTurn = !yourTurn;
     }
     console.log(moves);
-
-    await slowShow(moves);
+    if(real){
+        await slowShow(moves);
+    }
+    
     return playAgain;
 }
 
