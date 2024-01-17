@@ -72,6 +72,7 @@ button{
     border-radius: 20px;
     grid-template-columns:[pre] 1fr [start] 1fr [middle] 1fr [end] 1fr [post];
     gap: 20px;
+    padding: 10px;
 }
 .r{
     grid-column-start: middle;
