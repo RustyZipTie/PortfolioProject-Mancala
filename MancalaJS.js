@@ -1,8 +1,9 @@
 const board = [4, 4, 4, 4, 4, 4, 0, 4, 4, 4, 4, 4, 4, 0];//starts in the lower right, then goes clockwise, ending with your mancala.
 let yourTurn = true;
 let hard = false;
-let disableID = 0; 
+
 const disabler = e=>{
+    alert('Please wait for turn to end.');
     e.stopPropagation();
     e.preventDefault();
 }
@@ -18,9 +19,12 @@ for(const elem of document.querySelectorAll('button')){
 }
 
 function disableEvents(){
-    disableID = document.addEventListener('click', disabler, true);
+    document.addEventListener('click', disabler, true);
 }
 
+function enableEvents(){
+    document.removeEventListener('click', disabler, true);
+}
 
 function refreshUI(){
     for(let i=0; i<board.length; i++){
@@ -57,39 +61,63 @@ function refreshUI(){
     }
     document.getElementById('turn').innerHTML = yourTurn ? 'Your turn!' : 'Play- opponent';
 }
-function slowShow(moves){
-    
+//2401170906
+async function slowShow(moves){
+    let i = 0;
+    console.log('starting');
+    disableEvents();
+    let lastEl;
+    const id = await setInterval(()=>{
+        if(lastEl){
+            //console.log(`#d${moves[i].place - 1}`)
+            lastEl.classList.remove('active');
+        }
+        console.log('on:', i);
+        const el = document.querySelector(`#d${moves[i].place}`);
+        el.classList.add('active');
+        el.textContent = moves[i].stones;
+        lastEl = el;
+        i++;
+        if(!moves[i]){
+            clearInterval(id);
+            enableEvents();
+            refreshUI();
+            checkDone();
+            lastEl.classList.remove('active');
+            console.log('done');
+        }
+    }, 500);
 }
-function youPlay(place){
+async function youPlay(place){
     if(yourTurn){
-        refreshUI();
-        if(play(place)){
+        //refreshUI();
+        if(await play(place)){
             alert('You get to play again!');
         }
-        refreshUI();
+        //refreshUI();
     }else{
         alert('It\'s not your turn. \nClick "Play- opponent" below to let the opponent make it\'s move.')
     }
 }
-function oppPlay(){
+async function oppPlay(){
     console.log('In oppPlay()');
     let place = decideOppMove();
     if(!yourTurn){
         console.log("!yourturn");
         
-        refreshUI();
-        if(play(place)){
+        //refreshUI();
+        if(await play(place)){
             console.log('played. playagain is true');
             alert('Opponent gets to play again.');
         }else{console.log('played. playagain is false');}
-        refreshUI();
+        //refreshUI();
     }else{
         alert('It\'s your turn. \nClick one of the underlined numbers on the lower half of the board to make your move.');
         console.log('yourturn');
     }
 }
-function play(startPlace, playBoard = board, real = true){
-    
+async function play(startPlace, playBoard = board, real = true){
+    const moves = [];
     let playAgain = false;
     if(playBoard[startPlace]>0){
         //take stones from place and put in hand
@@ -104,12 +132,13 @@ function play(startPlace, playBoard = board, real = true){
             
         while(true){
             
-
+            moves.push({place:hand.place, stones:playBoard[hand.place]});
             while(hand.stones>0){
-                hand.move();
+                hand.move({place:hand.place, stones:playBoard[hand.place]});
                 if((yourTurn && hand.place!==6)||(!yourTurn && hand.place!==13)){
                     hand.stones--;
-                playBoard[hand.place]++;
+                    playBoard[hand.place]++;
+                    moves.push({place:hand.place, stones:playBoard[hand.place]})
                 }
             }
             
@@ -134,8 +163,8 @@ function play(startPlace, playBoard = board, real = true){
 
         }
         //check for a winner and refresh numbers
-        checkDone();
-        refreshUI();
+        //checkDone();
+        //refreshUI();
     }else{
         playAgain=true;
         alert('You clicked on a place with no stones. \nPlease choose a different place.');
@@ -144,6 +173,9 @@ function play(startPlace, playBoard = board, real = true){
     if(!playAgain && real){
         yourTurn = !yourTurn;
     }
+    console.log(moves);
+
+    await slowShow(moves);
     return playAgain;
 }
 

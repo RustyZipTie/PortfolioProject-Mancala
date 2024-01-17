@@ -55,6 +55,10 @@ button{
     outline-color: rgb(79, 8, 105);
 }
 
+#reset{
+    margin-block: 10px;
+}
+
 #table{
     width: 60%;
     align-content: center;
@@ -64,10 +68,10 @@ button{
 #board{
     margin: auto;
     display: grid;
-    grid-template-columns:  [start] 1fr [middle] 1fr [end];
-    grid-column-start: 1;
-    grid-column-end: 2;
-    gap: 30px;
+    border: 1px solid rgb(79, 8, 105);
+    border-radius: 20px;
+    grid-template-columns:[pre] 1fr [start] 1fr [middle] 1fr [end] 1fr [post];
+    gap: 20px;
 }
 .r{
     grid-column-start: middle;
@@ -77,13 +81,22 @@ button{
     grid-column-start: start;
     grid-column-end: middle;
 }
+.pre{
+    grid-column-start: pre;
+    grid-column-end: start;
+}
+.post{
+    grid-column-start: end;
+    grid-column-end: post;
+}
+
 .mancala{
     grid-column-start: start;
     grid-column-end: end;
 }
 
 .pit{
-    padding: 10px;
+    padding: 5px;
     font-size: 30px;
     text-align: center;
     color: aliceblue;
